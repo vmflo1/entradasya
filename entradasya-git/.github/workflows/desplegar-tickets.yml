@@ -1,0 +1,20 @@
+# Pipeline del servicio tickets: cada push a main que cambie services/tickets/ lo verifica y lo despliega.
+name: Desplegar tickets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/tickets/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-tickets
+  cancel-in-progress: false
+
+jobs:
+  tickets:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: tickets
+    secrets: inherit

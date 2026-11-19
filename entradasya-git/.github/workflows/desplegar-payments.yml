@@ -1,0 +1,20 @@
+# Pipeline del servicio payments: cada push a main que cambie services/payments/ lo verifica y lo despliega.
+name: Desplegar payments
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/payments/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-payments
+  cancel-in-progress: false
+
+jobs:
+  payments:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: payments
+    secrets: inherit

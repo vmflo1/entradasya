@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% block title %}Compra confirmada · {{ app_name }}{% endblock %}
+{% block content %}
+<section class="success" id="success" data-orden-id="{{ orden_id }}">
+  <div class="check" aria-hidden="true">
+    <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-15"/></svg>
+  </div>
+  <p class="eyebrow">Compra confirmada</p>
+  <h1 class="success__title" id="ok-evento">¡Listo!</h1>
+  <p class="hero__lead" id="ok-texto">Estamos preparando tus entradas.</p>
+
+  <div class="card success__card">
+    <div class="summary" id="ok-resumen"></div>
+  </div>
+
+  <div class="success__actions">
+    <a href="/mis-entradas" class="btn btn--primary">Descargar mis entradas</a>
+    <a href="/" class="btn btn--ghost">Volver a la cartelera</a>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/confirmacion.js?v={{ v }}"></script>{% endblock %}

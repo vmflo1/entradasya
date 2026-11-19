@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+{% block body_class %}modo-sistema{% endblock %}
+{% block title %}Control de ingresos · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="control-app" data-evento-id="{{ evento_id }}">
+  <a href="/portero" class="back">← Eventos</a>
+
+  <section class="org-head" id="ev-head"><p class="eyebrow">Cargando…</p></section>
+
+  <section class="puerta-grid">
+    <div class="stack-lg">
+      <div class="resultado resultado--espera" id="resultado" aria-live="assertive">
+        <p class="resultado__titulo">Esperando código…</p>
+        <p class="resultado__detalle">Escanea el QR o escribe el código de la entrada.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Escanear QR</h2>
+        <div id="lector" class="lector"></div>
+        <button type="button" class="btn btn--block" id="btn-camara">Activar cámara</button>
+        <p class="note" id="nota-camara">En el celular, la cámara solo funciona con HTTPS o desde <strong>localhost</strong>. Si no se activa, escribe el código.</p>
+        <form id="form-codigo" class="inline-form" novalidate>
+          <input name="codigo" type="text" placeholder="EY-XXXXXXXXXX" autocomplete="off" autocapitalize="characters" required>
+          <button class="btn btn--primary" type="submit">Validar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="stack-lg">
+      <div class="card">
+        <h2 class="section-title">Ingresos por zona</h2>
+        <div class="total-ingresos" id="total-ingresos"></div>
+        <div class="zonas" id="zonas"><p class="muted">Cargando…</p></div>
+        <p class="muted small" id="actualizado"></p>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Últimos escaneos</h2>
+        <ul class="historial" id="historial"><li class="muted">Todavía no hay escaneos.</li></ul>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/vendor/html5-qrcode.min.js?v={{ v }}"></script>
+<script src="/static/js/portero_control.js?v={{ v }}"></script>
+{% endblock %}

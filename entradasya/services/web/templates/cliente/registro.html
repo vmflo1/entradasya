@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}Crear cuenta · {{ app_name }}{% endblock %}
+{% block content %}
+<section class="auth">
+  <div class="card auth__card">
+    <p class="eyebrow">Nuevo cliente</p>
+    <h1 class="auth__title">Crear cuenta</h1>
+    <form id="registro-form" class="stack" novalidate>
+      <label class="field"><span>Nombre</span><input name="nombre" type="text" autocomplete="name" required></label>
+      <label class="field"><span>Correo</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span>Contraseña <small class="muted">(mínimo 6 caracteres)</small></span><input name="password" type="password" autocomplete="new-password" minlength="6" required></label>
+      <div class="alert" id="alert" role="alert" hidden></div>
+      <button class="btn btn--primary btn--block" type="submit">Crear cuenta</button>
+    </form>
+    <p class="auth__alt">¿Ya tienes cuenta? <a href="/login" id="link-login">Ingresa</a></p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/auth.js?v={{ v }}"></script>{% endblock %}

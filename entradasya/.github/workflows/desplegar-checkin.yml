@@ -1,0 +1,20 @@
+# Pipeline del servicio checkin: cada push a main que cambie services/checkin/ lo verifica y lo despliega.
+name: Desplegar checkin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/checkin/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-checkin
+  cancel-in-progress: false
+
+jobs:
+  checkin:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: checkin
+    secrets: inherit

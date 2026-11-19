@@ -1,0 +1,12 @@
+# Entornos y secretos
+.venv/
+.env
+
+# Datos generados
+services/*/data/
+logs/
+run/
+
+# Python
+__pycache__/
+*.pyc

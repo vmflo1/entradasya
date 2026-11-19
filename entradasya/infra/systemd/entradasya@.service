@@ -1,0 +1,23 @@
+# EntradasYa v1 - Plantilla systemd: una instancia por servicio.
+#   sudo systemctl start  entradasya@auth
+#   sudo systemctl status entradasya@auth
+#   journalctl -u entradasya@auth -f        (logs del servicio)
+# La instala infra/scripts/instalar_servidor.sh
+
+[Unit]
+Description=EntradasYa - servicio %i
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=entradasya
+Group=entradasya
+WorkingDirectory=/opt/entradasya/services/%i
+ExecStart=/opt/entradasya/services/%i/.venv/bin/python -m app.main
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

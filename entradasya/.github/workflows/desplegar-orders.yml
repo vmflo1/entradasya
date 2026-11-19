@@ -1,0 +1,20 @@
+# Pipeline del servicio orders: cada push a main que cambie services/orders/ lo verifica y lo despliega.
+name: Desplegar orders
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/orders/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-orders
+  cancel-in-progress: false
+
+jobs:
+  orders:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: orders
+    secrets: inherit

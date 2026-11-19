@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %}
+{% block body_class %}modo-sistema{% endblock %}
+{% block title %}Editar evento · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="org-evento" data-evento-id="{{ evento_id }}">
+  <a href="/organizador" class="back">← Mis eventos</a>
+
+  <section class="org-head" id="org-head"><p class="eyebrow">Cargando…</p></section>
+
+  <!-- Ventas e ingresos -->
+  <section class="stats" id="stats" aria-label="Ventas e ingresos"></section>
+
+  <section class="org-grid">
+    <div class="stack-lg">
+      <!-- Sectores -->
+      <div class="card">
+        <h2 class="section-title">Sectores</h2>
+        <div class="table-wrap table-wrap--flat">
+          <table class="table">
+            <thead><tr><th>Sector</th><th>Precio (Bs)</th><th>Cupo total</th><th>Vendidas</th><th>Disponibles</th><th></th></tr></thead>
+            <tbody id="sectores"></tbody>
+          </table>
+        </div>
+        <form id="form-sector" class="inline-form" novalidate>
+          <input name="nombre" type="text" placeholder="Nombre (ej. VIP)" maxlength="60" required>
+          <input name="precio" type="number" placeholder="Precio" min="0" step="0.01" required>
+          <input name="cupo_total" type="number" placeholder="Cupo" min="1" step="1" required>
+          <button class="btn btn--primary" type="submit">Agregar sector</button>
+        </form>
+        <div class="alert" id="alert-sector" role="alert" hidden></div>
+      </div>
+
+      <!-- Ventas por sector -->
+      <div class="card">
+        <h2 class="section-title">Ventas por sector</h2>
+        <div class="table-wrap table-wrap--flat">
+          <table class="table">
+            <thead><tr><th>Sector</th><th>Entradas</th><th>Recaudado</th></tr></thead>
+            <tbody id="ventas"><tr><td colspan="3" class="muted">Cargando…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <aside class="stack-lg">
+      <!-- Estado -->
+      <div class="card">
+        <h2 class="section-title">Estado</h2>
+        <p id="estado-actual"></p>
+        <div class="estado-acciones" id="estado-acciones"></div>
+        <div class="alert" id="alert-estado" role="alert" hidden></div>
+      </div>
+
+      <!-- Imagen -->
+      <div class="card">
+        <h2 class="section-title">Imagen</h2>
+        <div class="img-preview" id="img-preview"><span class="muted">Sin imagen</span></div>
+        <form id="form-imagen" novalidate>
+          <label class="field"><span>JPG, PNG o WebP (máximo 5 MB)</span><input name="archivo" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+          <button class="btn btn--block" type="submit">Subir imagen</button>
+        </form>
+        <div class="alert" id="alert-imagen" role="alert" hidden></div>
+      </div>
+
+      <!-- Datos -->
+      <div class="card">
+        <h2 class="section-title">Datos del evento</h2>
+        <form id="form-datos" novalidate>
+          <label class="field"><span>Nombre</span><input name="nombre" type="text" maxlength="150" required></label>
+          <label class="field"><span>Fecha y hora</span><input name="fecha" type="datetime-local" required></label>
+          <label class="field"><span>Lugar</span><input name="lugar" type="text" maxlength="150" required></label>
+          <label class="field"><span>Descripción</span><textarea name="descripcion" rows="3" maxlength="2000"></textarea></label>
+          <div class="alert" id="alert-datos" role="alert" hidden></div>
+          <button class="btn btn--primary btn--block" type="submit">Guardar cambios</button>
+        </form>
+      </div>
+    </aside>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/org_evento.js?v={{ v }}"></script>{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% block body_class %}modo-sistema{% endblock %}
+{% block title %}Eventos · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="portero-app">
+  <section class="hero hero--small">
+    <p class="eyebrow">Portero</p>
+    <h1 class="hero__title"><em class="tilt">Eventos</em></h1>
+    <p class="hero__lead">Elige el evento en el que vas a trabajar para abrir su control de ingresos.</p>
+  </section>
+
+  <section class="hoy" aria-labelledby="t-hoy">
+    <h2 id="t-hoy" class="section-title">Hoy <span class="muted small" id="hoy-fecha"></span></h2>
+    <div class="ev-grid" id="hoy"><p class="muted">Cargando…</p></div>
+  </section>
+
+  <section class="block-gap" aria-labelledby="t-mes">
+    <h2 id="t-mes" class="section-title">Próximos eventos</h2>
+    <div class="chips" id="meses" role="tablist" aria-label="Meses"></div>
+    <div class="ev-grid" id="lista"></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/portero_eventos.js?v={{ v }}"></script>{% endblock %}

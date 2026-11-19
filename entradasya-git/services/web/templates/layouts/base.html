@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ app_name }}{% endblock %}</title>
+  <link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/styles.css?v={{ v }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="/" class="logo" id="logo" aria-label="{{ app_name }}, inicio">{% include "layouts/_logo.html" %}</a>
+      <nav class="nav" aria-label="Principal">
+        <!-- Los enlaces dependen del rol: los pinta api.js (cliente, organizador o portero) -->
+        <span id="nav-links" class="nav__links"><a href="/" class="nav__link">Cartelera</a></span>
+        <span id="nav-sesion" class="nav__sesion"></span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>{{ app_name }} · v1</span>
+      <span>Proyecto de clase · Contenedores y Orquestación</span>
+    </div>
+  </footer>
+
+  <script src="/static/js/api.js?v={{ v }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

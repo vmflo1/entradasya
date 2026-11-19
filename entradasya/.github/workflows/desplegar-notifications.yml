@@ -1,0 +1,20 @@
+# Pipeline del servicio notifications: cada push a main que cambie services/notifications/ lo verifica y lo despliega.
+name: Desplegar notifications
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/notifications/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-notifications
+  cancel-in-progress: false
+
+jobs:
+  notifications:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: notifications
+    secrets: inherit

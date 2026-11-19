@@ -1,0 +1,8 @@
+{
+  // VS Code le ofrecerá instalarlas al abrir la carpeta del proyecto
+  "recommendations": [
+    "humao.rest-client",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg"
+  ]
+}

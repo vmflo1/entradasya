@@ -1,0 +1,23 @@
+{
+  // ---------- REST Client: elija el entorno en la barra inferior (Windows o Ubuntu) ----------
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "nombre": "Gladys Prueba",
+      "email": "gladys@prueba.com",
+      "password": "clave123",
+      "tarjetaOk": "4111111111111111",
+      "tarjetaRechazada": "4111111111110000"
+    },
+    "windows": { "B": "http://localhost:8080" },
+    "ubuntu":  { "B": "http://localhost" }
+  },
+
+  // ---------- SQLTools: una conexión por base de datos (usuario postgres) ----------
+  "sqltools.connections": [
+    { "name": "auth_db",     "driver": "PostgreSQL", "server": "localhost", "port": 5432, "database": "auth_db",     "username": "postgres", "askForPassword": true, "connectionTimeout": 15 },
+    { "name": "events_db",   "driver": "PostgreSQL", "server": "localhost", "port": 5432, "database": "events_db",   "username": "postgres", "askForPassword": true, "connectionTimeout": 15 },
+    { "name": "orders_db",   "driver": "PostgreSQL", "server": "localhost", "port": 5432, "database": "orders_db",   "username": "postgres", "askForPassword": true, "connectionTimeout": 15 },
+    { "name": "payments_db", "driver": "PostgreSQL", "server": "localhost", "port": 5432, "database": "payments_db", "username": "postgres", "askForPassword": true, "connectionTimeout": 15 },
+    { "name": "tickets_db",  "driver": "PostgreSQL", "server": "localhost", "port": 5432, "database": "tickets_db",  "username": "postgres", "askForPassword": true, "connectionTimeout": 15 }
+  ]
+}

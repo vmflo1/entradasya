@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+{% block body_class %}modo-sistema{% endblock %}
+{% block title %}Eventos · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="org-app">
+  <section class="hero hero--small hero--row">
+    <div>
+      <p class="eyebrow">Organizador</p>
+      <h1 class="hero__title"><em class="tilt">Eventos</em></h1>
+    </div>
+    <a href="/organizador/nuevo" class="btn btn--primary" id="btn-nuevo">+ Nuevo evento</a>
+  </section>
+
+  <!-- Filtro por mes y por día -->
+  <section class="filtros card" aria-label="Filtrar eventos">
+    <div class="filtros__meses">
+      <span class="label">Mes</span>
+      <div class="chips chips--flat" id="meses" role="tablist" aria-label="Meses"></div>
+    </div>
+    <div class="filtros__dia">
+      <label class="field field--inline"><span class="label">Día</span><input id="f-dia" type="date" class="select"></label>
+      <button type="button" class="btn btn--ghost" id="f-limpiar">Ver todos</button>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-hoy">
+    <h2 id="t-hoy" class="section-title">Hoy <span class="muted small" id="hoy-fecha"></span></h2>
+    <div class="mini-grid" id="hoy"><p class="muted">Cargando…</p></div>
+  </section>
+
+  <section class="block-gap" aria-labelledby="t-lista">
+    <h2 id="t-lista" class="section-title">Próximos eventos</h2>
+    <div class="org-list" id="org-list" aria-live="polite"></div>
+  </section>
+
+  <section class="block-gap" id="sec-anteriores" hidden>
+    <details class="anteriores">
+      <summary class="section-title">Eventos anteriores <span class="muted small" id="n-anteriores"></span></summary>
+      <div class="org-list" id="anteriores"></div>
+    </details>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/organizador.js?v={{ v }}"></script>{% endblock %}

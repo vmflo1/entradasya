@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+{% block title %}Entradas · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="evento-app" data-evento-id="{{ evento_id }}">
+  <a href="/" class="back">← Cartelera</a>
+
+  <section class="event-head" id="event-head">
+    <p class="eyebrow">Cargando…</p>
+  </section>
+
+  <section class="buy-grid">
+    <!-- Mapa de sectores -->
+    <div class="card map-card">
+      <div class="card__head">
+        <h2 class="section-title">Elige tu sector</h2>
+        <ul class="legend" id="legend"></ul>
+      </div>
+      <div class="map" id="map" aria-label="Mapa de sectores"></div>
+    </div>
+
+    <!-- Panel lateral de compra -->
+    <aside class="card panel" aria-label="Tu compra">
+      <h2 class="section-title">Sectores</h2>
+      <ul class="sector-list" id="sector-list"></ul>
+
+      <div class="panel__block">
+        <p class="label">Cantidad <span class="muted">(máximo 6)</span></p>
+        <div class="pills" id="pills"></div>
+      </div>
+
+      <form id="pay-form" class="panel__block" autocomplete="off" novalidate>
+        <p class="label">Forma de pago</p>
+        <div class="metodos" role="tablist" aria-label="Forma de pago">
+          <button type="button" class="metodo is-active" role="tab" aria-selected="true" data-metodo="tarjeta">Tarjeta</button>
+          <button type="button" class="metodo" role="tab" aria-selected="false" data-metodo="qr">Pago con QR</button>
+        </div>
+
+        <!-- Tarjeta: como en una pasarela real -->
+        <div id="pago-tarjeta">
+          <label class="field">
+            <span>Titular</span>
+            <input name="titular" type="text" autocomplete="cc-name" placeholder="Nombre como figura en la tarjeta">
+          </label>
+          <label class="field">
+            <span>Número de tarjeta</span>
+            <input name="numero" type="text" inputmode="numeric" autocomplete="cc-number" maxlength="23" placeholder="4111 1111 1111 1111">
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>Vencimiento</span>
+              <input name="vencimiento" type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/AA">
+            </label>
+            <label class="field">
+              <span>Código de seguridad</span>
+              <input name="cvv" type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="CVV">
+            </label>
+          </div>
+          <p class="note">Pago de prueba: no se usa dinero real. Las tarjetas que terminan en <strong>0000</strong> se rechazan. El código de seguridad no se guarda.</p>
+        </div>
+
+        <!-- QR: simulado -->
+        <div id="pago-qr" class="qr-pago" hidden>
+          <p class="qr-pago__monto" id="qr-monto">Bs 0.00</p>
+          <img src="/static/img/pago-qr.svg?v={{ v }}" alt="Código QR de pago de prueba" width="180" height="180">
+          <p class="note">Escanea el QR con la app de tu banco y luego presiona <strong>Ya pagué</strong>. Pago de prueba: no se usa dinero real.</p>
+        </div>
+
+        <div class="summary" id="summary">
+          <div><span>Sector</span><strong id="sum-sector">—</strong></div>
+          <div><span>Entradas</span><strong id="sum-cantidad">—</strong></div>
+          <div class="summary__total"><span>Total</span><strong id="sum-total">Bs 0.00</strong></div>
+        </div>
+
+        <div class="alert" id="alert" role="alert" hidden></div>
+        <button type="submit" class="btn btn--primary btn--block" id="btn-comprar" disabled>Confirmar compra</button>
+      </form>
+    </aside>
+  </section>
+
+  <!-- Barra fija en el celular: total y acceso directo al pago -->
+  <div class="buybar" id="buybar" hidden>
+    <div><span class="muted small" id="buybar-detalle">Elige un sector</span><strong id="buybar-total">Bs 0.00</strong></div>
+    <button type="button" class="btn btn--primary" id="buybar-btn">Continuar al pago</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/evento.js?v={{ v }}"></script>{% endblock %}

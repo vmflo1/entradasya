@@ -1,0 +1,20 @@
+# Pipeline del servicio auth: cada push a main que cambie services/auth/ lo verifica y lo despliega.
+name: Desplegar auth
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/auth/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-auth
+  cancel-in-progress: false
+
+jobs:
+  auth:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: auth
+    secrets: inherit

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu compra en EntradasYa</title>
+</head>
+<body style="margin:0;padding:0;background:#F2F0EB;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#111111;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2F0EB;padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border:1px solid #E2DFD8;border-radius:20px;overflow:hidden;">
+        <tr>
+          <td style="background:#111111;padding:32px;">
+            <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#FAAC43;font-weight:600;">EntradasYa · Compra confirmada</div>
+            <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:34px;line-height:1.1;color:#FFFFFF;margin-top:16px;">$evento_nombre</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0;font-size:0;line-height:0;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+              <td width="33%" height="5" style="background:#2B90A8;"></td>
+              <td width="34%" height="5" style="background:#FAAC43;"></td>
+              <td width="33%" height="5" style="background:#F5604F;"></td>
+            </tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px;">
+            <p style="font-size:16px;line-height:1.5;margin:0 0 24px;">Hola $nombre, tu compra está lista. Ya puedes descargar tus entradas en PDF con su código QR.</p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.4;">
+              <tr><td style="color:#8A8A8A;padding:6px 0;">Fecha</td><td align="right" style="padding:6px 0;font-weight:600;">$evento_fecha</td></tr>
+              <tr><td style="color:#8A8A8A;padding:6px 0;">Lugar</td><td align="right" style="padding:6px 0;font-weight:600;">$evento_lugar</td></tr>
+              <tr><td style="color:#8A8A8A;padding:6px 0;">Sector</td><td align="right" style="padding:6px 0;font-weight:600;">$sector_nombre</td></tr>
+              <tr><td style="color:#8A8A8A;padding:6px 0;">Entradas</td><td align="right" style="padding:6px 0;font-weight:600;">$cantidad</td></tr>
+              <tr><td style="color:#8A8A8A;padding:6px 0;border-top:1px solid #E2DFD8;">Total</td><td align="right" style="padding:6px 0;font-weight:600;border-top:1px solid #E2DFD8;">Bs $total</td></tr>
+            </table>
+            <div style="text-align:center;margin:32px 0 8px;">
+              <a href="$enlace" style="display:inline-block;background:#111111;color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:500;padding:16px 32px;border-radius:999px;">Descargar mis entradas</a>
+            </div>
+            <p style="font-size:12px;color:#8A8A8A;text-align:center;margin:16px 0 0;">Orden $orden_id</p>
+          </td>
+        </tr>
+      </table>
+      <p style="font-size:11px;color:#8A8A8A;margin-top:16px;">Cada entrada es válida para un solo ingreso.</p>
+    </td></tr>
+  </table>
+</body>
+</html>

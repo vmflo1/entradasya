@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% block title %}Ingresar · {{ app_name }}{% endblock %}
+{% block content %}
+<section class="auth">
+  <div class="card auth__card">
+    <p class="eyebrow">Bienvenido</p>
+    <h1 class="auth__title">Ingresar</h1>
+    <form id="login-form" class="stack" novalidate>
+      <label class="field"><span>Correo</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span>Contraseña</span><input name="password" type="password" autocomplete="current-password" required></label>
+      <div class="alert" id="alert" role="alert" hidden></div>
+      <button class="btn btn--primary btn--block" type="submit">Ingresar</button>
+    </form>
+    <p class="auth__alt">¿No tienes cuenta? <a href="/registro" id="link-registro">Regístrate</a></p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/auth.js?v={{ v }}"></script>{% endblock %}

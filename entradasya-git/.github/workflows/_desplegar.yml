@@ -1,0 +1,71 @@
+# EntradasYa v1 - Pipeline reutilizable: verifica y despliega UN servicio en el servidor Ubuntu.
+# Lo llaman los archivos desplegar-<servicio>.yml (uno por servicio / grupo).
+#
+# Modo de despliegue (variable del repositorio DEPLOY_MODO, en Settings → Secrets and variables → Actions → Variables):
+#   self-hosted (por defecto): un runner de GitHub instalado en el propio servidor Ubuntu ejecuta el despliegue.
+#                              Sirve aunque el servidor no tenga IP pública (laptop, VM local).
+#   ssh:                       GitHub se conecta por SSH al servidor (necesita IP pública o accesible).
+#                              Secrets: SSH_HOST, SSH_USER, SSH_KEY (clave privada) y opcional SSH_PORT.
+name: _desplegar
+
+on:
+  workflow_call:
+    inputs:
+      servicio:
+        required: true
+        type: string
+
+jobs:
+  verificar:
+    name: Verificar ${{ inputs.servicio }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r services/${{ inputs.servicio }}/requirements.txt
+      - name: Compilar el código (detecta errores de sintaxis)
+        run: python -m compileall -q services/${{ inputs.servicio }}/app
+      - name: Verificar que el código no tenga direcciones ni puertos fijos
+        run: |
+          if grep -rnE "127\.0\.0\.1|localhost|:800[0-9]|5432|cambiar_(password|secreto|clave)" --include=*.py services/${{ inputs.servicio }}/app; then
+            echo "Hay configuración escrita en el código: debe ir en variables de entorno"; exit 1
+          fi
+
+  desplegar-self-hosted:
+    name: Desplegar ${{ inputs.servicio }} (runner en el servidor)
+    needs: verificar
+    if: vars.DEPLOY_MODO != 'ssh'
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Desplegar
+        run: sudo /usr/local/bin/entradasya-desplegar "${{ inputs.servicio }}" "$GITHUB_WORKSPACE"
+
+  desplegar-ssh:
+    name: Desplegar ${{ inputs.servicio }} (por SSH)
+    needs: verificar
+    if: vars.DEPLOY_MODO == 'ssh'
+    runs-on: ubuntu-latest
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar la clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "$SSH_PORT" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+      - name: Copiar el código del servicio al servidor
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_deploy -p $SSH_PORT" \
+            services/${{ inputs.servicio }}/ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:entradasya-deploy/services/${{ inputs.servicio }}/" \
+            --rsync-path="mkdir -p entradasya-deploy/services/${{ inputs.servicio }} && rsync"
+      - name: Desplegar
+        run: |
+          ssh -i ~/.ssh/id_deploy -p "$SSH_PORT" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            'sudo /usr/local/bin/entradasya-desplegar "${{ inputs.servicio }}" "$HOME/entradasya-deploy"'

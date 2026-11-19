@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+{% block body_class %}modo-sistema{% endblock %}
+{% block title %}Nuevo evento · {{ app_name }}{% endblock %}
+{% block content %}
+<div id="org-nuevo">
+  <a href="/organizador" class="back">← Mis eventos</a>
+  <section class="hero hero--small">
+    <p class="eyebrow">Organizador</p>
+    <h1 class="hero__title">Nuevo <em class="tilt">evento</em></h1>
+    <p class="hero__lead">Se crea como <strong>borrador</strong>. Después podrás agregar sectores, subir la imagen y publicarlo.</p>
+  </section>
+
+  <section class="form-page card">
+    <form id="form-evento" novalidate>
+      <label class="field"><span>Nombre</span><input name="nombre" type="text" maxlength="150" required></label>
+      <div class="form-row">
+        <label class="field"><span>Fecha y hora</span><input name="fecha" type="datetime-local" required></label>
+        <label class="field"><span>Lugar</span><input name="lugar" type="text" maxlength="150" required></label>
+      </div>
+      <label class="field"><span>Descripción</span><textarea name="descripcion" rows="4" maxlength="2000"></textarea></label>
+      <div class="alert" id="alert" role="alert" hidden></div>
+      <div class="form-actions">
+        <a href="/organizador" class="btn btn--ghost">Cancelar</a>
+        <button class="btn btn--primary" type="submit">Crear evento</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/org_nuevo.js?v={{ v }}"></script>{% endblock %}

@@ -1,0 +1,20 @@
+# Pipeline del servicio web: cada push a main que cambie services/web/ lo verifica y lo despliega.
+name: Desplegar web
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/web/**"
+  workflow_dispatch:   # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: desplegar-web
+  cancel-in-progress: false
+
+jobs:
+  web:
+    uses: ./.github/workflows/_desplegar.yml
+    with:
+      servicio: web
+    secrets: inherit

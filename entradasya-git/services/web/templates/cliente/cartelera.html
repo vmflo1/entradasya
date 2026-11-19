@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+{% block title %}Cartelera · {{ app_name }}{% endblock %}
+{% block content %}
+<!-- Buscador -->
+<form class="buscador" id="buscador" role="search" autocomplete="off">
+  <label class="buscador__campo">
+    <span class="buscador__label">Buscar</span>
+    <input type="search" name="q" placeholder="Evento o lugar">
+  </label>
+  <label class="buscador__campo">
+    <span class="buscador__label">Fechas</span>
+    <select name="mes"><option value="">Todas las fechas</option></select>
+  </label>
+  <button class="btn btn--primary" type="submit">Buscar</button>
+</form>
+
+<!-- Destacados -->
+<section class="destacados" id="destacados" aria-label="Eventos destacados">
+  <div class="destacado destacado--carga"></div>
+</section>
+
+<section class="fila" aria-labelledby="t-semana" id="sec-semana">
+  <div class="fila__head">
+    <h2 class="fila__titulo" id="t-semana">Esta semana</h2>
+    <div class="rail-controls"><button class="btn-round" data-rail="semana" data-dir="-1" aria-label="Anterior">←</button><button class="btn-round" data-rail="semana" data-dir="1" aria-label="Siguiente">→</button></div>
+  </div>
+  <div class="rail rail--cards" id="semana" tabindex="0"></div>
+</section>
+
+<section class="fila" aria-labelledby="t-vendidos" id="sec-vendidos">
+  <div class="fila__head">
+    <h2 class="fila__titulo" id="t-vendidos">Más vendidos</h2>
+    <div class="rail-controls"><button class="btn-round" data-rail="vendidos" data-dir="-1" aria-label="Anterior">←</button><button class="btn-round" data-rail="vendidos" data-dir="1" aria-label="Siguiente">→</button></div>
+  </div>
+  <div class="rail rail--cards" id="vendidos" tabindex="0"></div>
+</section>
+
+<section class="fila" aria-labelledby="t-todos">
+  <div class="fila__head"><h2 class="fila__titulo" id="t-todos">Todos los eventos</h2></div>
+  <div class="grid-eventos" id="todos"><p class="muted">Cargando…</p></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/cartelera.js?v={{ v }}"></script>{% endblock %}
